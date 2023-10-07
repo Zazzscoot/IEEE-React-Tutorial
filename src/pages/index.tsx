@@ -29,7 +29,7 @@ export default function Home() {
     // gets all the data from API
     // filters through some of it into our state variables
     const data = {
-      key: "28e16256783040ab9dc122111230710",
+      key: process.env.REACT_APP_API_KEY,
     }
     const hi = await fetch(`http://api.weatherapi.com/v1/current.json?key=${data.key}&q=${location}&aqi=no`)
     const content = await hi.json()

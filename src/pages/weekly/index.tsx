@@ -8,7 +8,7 @@ export default function Weekly() {
   const [allcontent, setAllcontent] = useState<any[]>([])
   const getForecastData = async () => {
     const data = {
-      key: "28e16256783040ab9dc122111230710",
+      key:  process.env.REACT_APP_API_KEY,
       q: "Toronto",
       numDays: "3",
     }
