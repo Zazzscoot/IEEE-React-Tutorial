@@ -11,20 +11,55 @@ const inter = Inter({ subsets: ['latin'] })
 export default function Home() {
 
   //useState demo
-  let location = "Toronto, Ontario"
-  // const changeLocation = () => {
-  //   location = ("London, Ontario")
-  // }
   
+  
+  const [time, setTime] = useState()
+  const [temperature, setTemperature] = useState()
+  const [weather, setWeather] = useState()
+  const [wind, setWind] = useState()
+  const [pressure, setPressure] = useState()
+  const [precipitation, setPrecipitation] = useState()
+  const [humidity, setHumidity] = useState()
+  const [feelsLike, setFeelsLike] = useState()
+  const [uv, setUV] = useState()
+
+  const [location, setLocation] = useState("Toronto, Ontario")
   //useEffect demo
+  const getWeatherData = async () => {
+    // gets all the data from API
+    // filters through some of it into our state variables
+    const data = {
+      key: "28e16256783040ab9dc122111230710",
+    }
+    const hi = await fetch(`http://api.weatherapi.com/v1/current.json?key=${data.key}&q=${location}&aqi=no`)
+    const content = await hi.json()
+
+    setFeelsLike(content.current.feelslike_c)
+    setHumidity(content.current.humidity)
+    setUV(content.current.uv)
+    setPrecipitation(content.current.precip_mm)
+    setPressure(content.current.pressure_mb)
+    setWind(content.current.wind_kph)
+    setWeather(content.current.condition.text)
+    setTemperature(content.current.temp_c)
+    setTime(content.current.last_updated)
+
+    return content.current
+  }
+
+
+  //@ts-ignore
   useEffect(() => {
     //put your function that runs here
+    getWeatherData()
   },
-  [ // when a variable in this array changes, the function will run. 
-    // if left blank, this function runs once in the very beginning
-  ])
+  [location])
+
+
   
   return (
+    <>
+   
     <main
       className={`min-h-screen ${inter.className}`}
     >
@@ -43,21 +78,21 @@ export default function Home() {
             Weather of {location}
           </h1>
           <h3>
-            As of 8:53AM
+            Last Updated: {time}
           </h3>
 
           {/* {UseState Demo} */}
-          {/* <button
+          <button
             className="bg-gray-200 rounded-lg hover:bg-gray-400"
-            onClick={changeLocation}
+            onClick={() => {setLocation(location === "Toronto, Ontario" ? "London, Ontario" : "Toronto, Ontario")}}
           >
-            Wait I'm in London
-          </button> */}
+            Wait I'm in {location === "Toronto, Ontario" ? "London" : "Toronto"}
+          </button>
 
           <h1
             className="text-yellow-500 font-semibold text-9xl mt-8 border-b-4 border-gray-300 border-solid pb-4 mb-3"
           >
-            7°C
+            {temperature}°C
           </h1>
           <div
             className="flex items-center"
@@ -66,32 +101,27 @@ export default function Home() {
             <h1
               className="text-yellow-500 font-semibold text-3xl mt-3 pl-5"
             >
-              SUNNY
+              {weather}
             </h1>
           </div>
-          
-          <h2
-            className="text-gray-400 font-semibold pl-5"
-          >
-            No chance of Rain within the next 3 hours
-          </h2>
           
           
         </div>
 
         {/* Showing detailed weather info */}
         <div className="self-center items-stretch ml-14 mr-14 mt-10 px-2 w-1/3">
-          <TableItem type="Wind" data="33.1km/h"/>
-          <TableItem type="Pressure" data="1010.0mb"/>
-          <TableItem type="Precipitation" data="0.0mm"/>
-          <TableItem type="Humidity" data="67%"/>
-          <TableItem type="Feels Like" data="10°C"/>
-          <TableItem type="UV" data="3.0"/>
+          <TableItem type="Wind" data={wind}/>
+          <TableItem type="Pressure" data={pressure}/>
+          <TableItem type="Precipitation" data={precipitation}/>
+          <TableItem type="Humidity" data={humidity}/>
+          <TableItem type="Feels Like" data={feelsLike}/>
+          <TableItem type="UV" data={uv}/>
         </div>
           
           
       </div>     
     </main>
+    </>
   )
 }
 
