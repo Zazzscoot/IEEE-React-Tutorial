@@ -16,6 +16,14 @@ export default function Home() {
   //   location = ("London, Ontario")
   // }
   
+  //useEffect demo
+  useEffect(() => {
+    //put your function that runs here
+  },
+  [ // when a variable in this array changes, the function will run. 
+    // if left blank, this function runs once in the very beginning
+  ])
+  
   return (
     <main
       className={`min-h-screen ${inter.className}`}
