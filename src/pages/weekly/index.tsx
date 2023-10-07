@@ -20,7 +20,7 @@ export default function Weekly() {
               °C
             </h2>
           </div>
-          <Image src="/cloudy.png" alt="sunny" width={150} height={150} className="self-start pt-4 pl-3" />
+          <Image src="/sunny.png" alt="sunny" width={150} height={150} className="self-start pt-4 pl-3" />
           <h1 className="self-start pl-11">
             Sunny
           </h1>
