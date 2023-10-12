@@ -8,7 +8,7 @@ export default function Weekly() {
   const [allcontent, setAllcontent] = useState<any[]>([])
   const getForecastData = async () => {
     const data = {
-      key:  process.env.REACT_APP_API_KEY,
+      key:  process.env.NEXT_PUBLIC_API_KEY,
       q: "Toronto",
       numDays: "3",
     }
@@ -34,6 +34,7 @@ export default function Weekly() {
         {allcontent.map((dayData) => {
           return (
             <Card 
+              key={dayData.date}
               date={dayData.date}
               temperature={dayData.day.maxtemp_c}
               weather={dayData.day.condition.text}
@@ -67,7 +68,7 @@ const Card = (props:any) => {
           </h1>
           <div className='flex flex-row justify-stretch items-center pt-8'>
             <Image src="/precipitation.png" alt="precipitation" width={40} height={40} className="self-start mr-3" />
-            <h1>{props.rain ?  props.rain : "No"} chance of Rain!</h1>
+            <h1>{props.rain ?  `${props.rain}%` : "No"} chance of Rain!</h1>
           </div>
         </div>
   )
